@@ -18,7 +18,10 @@ const UnitsChart = ({ mostRecentBalance }) => {
 
   const calculateUnits = (unitsCount) => {
     let oneUnit = parseInt(mostRecentBalance?.balance) / 100;
-    let unitsCounted = oneUnit * unitsCount;
+    let unitsCounted = (oneUnit * unitsCount);
+    if(unitsCounted % 1 !== 0){
+      unitsCounted = unitsCounted.toFixed(2)
+    }
     return (
       <div className={classes.unitsRow}>
         <Typography
@@ -37,7 +40,7 @@ const UnitsChart = ({ mostRecentBalance }) => {
             mostRecentBalance ? (
               `$ ${unitsCounted}`
             ):(
-              "$--"
+              "$ -"
             )
           }
           
@@ -71,9 +74,9 @@ const UnitsChart = ({ mostRecentBalance }) => {
         </div>
         {calculateUnits(1)}
         {calculateUnits(5)}
+        {calculateUnits(5.25)}
+        {calculateUnits(5.5)}
         {calculateUnits(10)}
-        {calculateUnits(15)}
-        {calculateUnits(20)}
       </Paper>
     </div>
   );
