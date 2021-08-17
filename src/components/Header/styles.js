@@ -18,6 +18,6 @@ export default makeStyles((theme) => ({
   },
   userImg:{
     width:'40px',
-    borderRadius:'2px'
+    borderRadius:'99px'
   },  
 }));
