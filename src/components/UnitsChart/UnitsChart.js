@@ -52,7 +52,7 @@ const UnitsChart = ({ mostRecentBalance }) => {
   const handleUniqueUnit = (e) => {
     setUniqueUnit(e.target.value);
     let oneUnit = parseInt(mostRecentBalance?.balance) / 100;
-    let unitsCounted = oneUnit * e.target.value;
+    let unitsCounted = (oneUnit * e.target.value).toFixed(2);
     setUniqueValue(unitsCounted)
   };
 
