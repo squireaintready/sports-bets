@@ -11,7 +11,7 @@ const BalancesChart = ({balances}) => {
           Recent Balances
         </Typography>
         {balances.map((dat) => (
-          <div className={classes.balancesChart} key={dat.id}>
+          <div className={classes.row} key={dat.id}>
             <Typography
               variant="subtitle1"
               gutterBottom

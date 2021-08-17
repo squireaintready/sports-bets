@@ -14,7 +14,7 @@ import TextField from '@material-ui/core/TextField';
 const UnitsChart = ({ mostRecentBalance }) => {
   const classes = useStyles();
   const [uniqueUnit, setUniqueUnit] = useState('');
-  const [uniqueValue, setUniqueValue] = useState('')
+  const [uniqueValue, setUniqueValue] = useState('0.00')
 
   const calculateUnits = (unitsCount) => {
     let oneUnit = parseInt(mostRecentBalance?.balance) / 100;
@@ -60,7 +60,7 @@ const UnitsChart = ({ mostRecentBalance }) => {
     <div className={classes.container}>
       <Paper className={classes.paper} elevation={3}>
         <Typography variant="h6" gutterBottom className={classes.header}>
-          Daily Units Chart
+          Units Converter
         </Typography>
         <div className={classes.uniqueRow}>
           <TextField type="number" value={uniqueUnit} onChange={handleUniqueUnit} inputProps={{ inputMode: 'decimal' }} label="Unit Count"/>
