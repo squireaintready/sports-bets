@@ -53,7 +53,7 @@ const Input = () => {
           onChange={handleChange}
           variant="outlined"
           label="Today's Balance"
-          pattern="[0-9]*" 
+          inputProps={{ inputMode: 'decimal' }}
           className={classes.textField}
         />
         <Button

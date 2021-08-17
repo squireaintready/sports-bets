@@ -63,7 +63,7 @@ const UnitsChart = ({ mostRecentBalance }) => {
           Daily Units Chart
         </Typography>
         <div className={classes.uniqueRow}>
-          <TextField type="number" value={uniqueUnit} onChange={handleUniqueUnit} pattern="[0-9]*" label="Unit Count"/>
+          <TextField type="number" value={uniqueUnit} onChange={handleUniqueUnit} inputProps={{ inputMode: 'decimal' }} label="Unit Count"/>
           <Typography
             variant="subtitle1"
             gutterBottom
