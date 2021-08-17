@@ -17,7 +17,7 @@ const Header = () => {
       <AppBar position="static" className={classes.container}>
         <Toolbar> 
           <Typography variant="h6" className={classes.title}>
-            WIN TRACKER
+            PJS
           </Typography>
           <img src={user?.photoURL} alt='' className={classes.userImg}/>
           <Auth/>
