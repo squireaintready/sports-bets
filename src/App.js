@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import Auth from "./components/Auth/Auth";
 import BalancesChart from "./components/BalancesChart/BalancesChart.js";
+import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header.js";
 import Input from "./components/Input/Input";
 import UnitsChart from "./components/UnitsChart/UnitsChart.js";
@@ -61,6 +62,7 @@ function App() {
           <Auth className={classes.loginBtn}/>
         </div>
       )}
+      <Footer/>
     </div>
   );
 }
