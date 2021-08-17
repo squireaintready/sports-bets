@@ -59,7 +59,7 @@ const UnitsChart = ({ mostRecentBalance }) => {
   return (
     <div className={classes.container}>
       <Paper className={classes.paper} elevation={3}>
-        <Typography variant="h6" gutterBottom className={classes.header}>
+        <Typography variant="h5" gutterBottom className={classes.header}>
           Units Converter
         </Typography>
         <div className={classes.uniqueRow}>

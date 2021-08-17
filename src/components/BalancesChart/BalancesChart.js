@@ -7,7 +7,7 @@ const BalancesChart = ({balances}) => {
   return (
     <div className={classes.container}>
       <Paper className={classes.paper} elevation={3}>
-        <Typography variant="h6" gutterBottom className={classes.header}>
+        <Typography variant="h5" gutterBottom className={classes.header}>
           Recent Balances
         </Typography>
         {balances.map((dat) => (
