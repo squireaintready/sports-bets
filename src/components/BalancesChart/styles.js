@@ -30,4 +30,10 @@ export default makeStyles((theme) => ({
   unitsText:{
     color:'white'
   },
+  leftSide:{
+    display:'flex',
+  },
+  icon:{
+    marginRight:'.5rem'
+  }
 }));

@@ -1,7 +1,8 @@
 import { Paper, Typography } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 import useStyles from "./styles";
 
-const BalancesChart = ({balances}) => {
+const BalancesChart = ({ balances }) => {
   const classes = useStyles();
 
   return (
@@ -12,13 +13,16 @@ const BalancesChart = ({balances}) => {
         </Typography>
         {balances.map((dat) => (
           <div className={classes.row} key={dat.id}>
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-              className={classes.unitsText}
-            >
-              {`$${dat.balance}`}
-            </Typography>
+            <div className={classes.leftSide}>
+              <EditIcon color='secondary' fontSize='small' className={classes.icon} />
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className={classes.unitsText}
+              >
+                {`$${dat.balance}`}
+              </Typography>
+            </div>
             <Typography
               variant="subtitle1"
               gutterBottom
