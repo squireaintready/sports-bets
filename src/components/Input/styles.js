@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   container:{
     display:'grid',
     placeItems:'center',
-    marginTop: '1rem'
+    marginTop: '2rem'
   },
   paper: {
     display: "flex",

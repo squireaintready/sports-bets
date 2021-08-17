@@ -47,7 +47,7 @@ function App() {
       {user ? (
         <>
         <Input />
-        <Grid container direction="row" justifyContent="center" alignItems="center" spacing={1} className={classes.grid}>
+        <Grid container direction="row" justifyContent="center" alignItems="center" spacing={2} className={classes.grid}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <UnitsChart mostRecentBalance={balances[0]}/>
           </Grid>

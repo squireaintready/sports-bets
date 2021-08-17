@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     flexGrow: 1,
     display:'grid',
     placeItems:'center',
-    margin: '1rem'
+    marginTop: '1rem'
   },
   unitsRow:{
     display:'flex',
@@ -43,11 +43,10 @@ export default makeStyles((theme) => ({
       color:'white',
       width: '35%',
       marginBottom:'1rem',
-      marginTop:'1rem',
     },
     "& h6":{
       height: "100%",
-      marginBottom:'0',
+      marginBottom:'1rem',
       marginTop:'1rem',
       color:'black'
     }

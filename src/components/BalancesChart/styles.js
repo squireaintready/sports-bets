@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     flexGrow: 1,
     display:'grid',
     placeItems:'center',
-    margin: '1rem'
+    margin: '2rem'
   },
   balancesChart:{
     // display:'flex',
