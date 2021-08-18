@@ -1,9 +1,75 @@
-import { Paper, Typography } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../../firebase";
+
+import { Input, Paper, Typography } from "@material-ui/core";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import PublishIcon from "@material-ui/icons/Publish";
 import useStyles from "./styles";
 
-const BalancesChart = ({ balances }) => {
+const BalancesChart = ({ balances, setStateFromDb }) => {
   const classes = useStyles();
+  const [input, setInput] = useState("");
+  const [editedRef, setEditedRef] = useState("");
+  const [user] = useAuthState(auth);
+
+  const handleIconClick = (id) => {
+    let inputRef = document.getElementById(`${id}`);
+    let previousBalanceRef =  document.getElementById(`${id}`).nextSibling;
+    let icon = document.getElementById(`${id}`).previousSibling;
+    console.log(icon)
+    // CLOSES PREVIOUSLY OPENED EDITS
+    if (editedRef && inputRef !== editedRef) {
+      editedRef.style.display = "none";
+      previousBalanceRef.style.textDecoration = 'none'
+    }
+    // TOGGLES DISPLAY ON IF DISPLAY IS OFF
+    if (inputRef.style.display === "none" || inputRef.style.display === "") {
+      console.log('display is on')
+      inputRef.style.display = "flex";
+      previousBalanceRef.style.textDecoration = 'line-through'
+      icon.style.transform = 'rotate(90deg)'
+    } else {
+      // TOGGLES DISPLAY OFF IS DISPLAY IS ON
+      console.log(inputRef.style.display)
+      console.log('display is off')
+      inputRef.style.display = "none";
+      previousBalanceRef.style.textDecoration = 'none'
+      icon.style.transform = 'rotate(-90deg)'
+    }
+    setInput("");
+    setEditedRef(inputRef);
+    // icon=''
+    // inputRef=''
+    // previousBalanceRef=''
+  };
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const submitUpdatedBalance = (balance) => {
+    // PUSH NEW BALANCE(input) TO FIREBASE
+    if (user) {
+      let uid = user.uid;
+      let balancesRef = db
+        .collection("users")
+        .doc(uid)
+        .collection("daily-balances");
+      balancesRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().balance === balance) {
+            let temp = doc.data();
+            balancesRef.doc(doc.id).set({
+              ...temp,
+              balance: input,
+            });
+          }
+        });
+      });
+    }
+    setInput("");
+  };
 
   return (
     <div className={classes.container}>
@@ -14,7 +80,26 @@ const BalancesChart = ({ balances }) => {
         {balances.map((dat) => (
           <div className={classes.row} key={dat.id}>
             <div className={classes.leftSide}>
-              <EditIcon color='secondary' fontSize='small' className={classes.icon} />
+              <ChevronRightIcon
+                color="secondary"
+                fontSize="small"
+                className={classes.icon}
+                onClick={() => handleIconClick(dat.id)}
+              />
+              <div id={dat.id} className={classes.editContainer}>
+                <Input
+                  type="text"
+                  value={input}
+                  className={classes.editInput}
+                  inputProps={{ inputMode: "decimal" }}
+                  onChange={handleChange}
+                />
+                <PublishIcon
+                  className={classes.publishIcon}
+                  fontSize="small"
+                  onClick={() => submitUpdatedBalance(dat.balance)}
+                />
+              </div>
               <Typography
                 variant="subtitle1"
                 gutterBottom
@@ -23,13 +108,15 @@ const BalancesChart = ({ balances }) => {
                 {`$${dat.balance}`}
               </Typography>
             </div>
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-              className={classes.unitsText}
-            >
-              {dat.timestamp}
-            </Typography>
+            <div className={classes.rightSide}>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className={classes.unitsText}
+              >
+                {dat.timestamp}
+              </Typography>
+            </div>
           </div>
         ))}
       </Paper>
@@ -38,29 +125,3 @@ const BalancesChart = ({ balances }) => {
 };
 
 export default BalancesChart;
-
-// <Grid container className={classes.dailyChart} spacing={2}>
-//   <Grid item xs={6} lg={6}>
-//     <p>{`$${dat.balance}`}</p>
-//   </Grid>
-//   <Grid item xs={6} lg={6}>
-//     <p>{dat.time}</p>
-//   </Grid>
-// </Grid>
-
-// useEffect(() => {
-//   // let balancesRef = db.collection('daily-balances')
-//   // balancesRef.get().then(doc => console.log(doc))
-//   db.collection("daily-balances")
-//     .orderBy("timestamp", "desc")
-//     .onSnapshot((snapshot) =>
-//       setData(
-//         snapshot.docs.map((doc) => ({
-//           balance: doc.data().balance,
-//           time: new Date(doc.data().timestamp?.seconds * 1000).toLocaleDateString('en-US'),
-//           // time: new Date(doc.data().timestamp?.seconds * 1000).toUTCString(),
-//         }))
-//       )
-//     );
-//   console.log(data);
-// }, []);
