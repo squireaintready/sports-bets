@@ -40,13 +40,13 @@ const Footer = () => {
             Innovating one project at a time
           </Typography>
           <Box className={classes.socialMediaIcons}>
-            <a target="_blank" href="https://github.com/squireaintready">
+            <a target="_blank" rel="noreferrer" href="https://github.com/squireaintready">
               <GitHubIcon className={classes.socialMediaIcon}/>
             </a>
-            <a target="_blank" href="https://www.linkedin.com/in/samuel-jo">
+            <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/samuel-jo">
               <LinkedInIcon className={classes.socialMediaIcon}/>
             </a>
-            <a target="_blank" href="https://www.instagram.com/jamnssamn/">
+            <a target="_blank" rel="noreferrer" href="https://www.instagram.com/jamnssamn/">
               <InstagramIcon className={classes.socialMediaIcon}/>
             </a>
           </Box>
