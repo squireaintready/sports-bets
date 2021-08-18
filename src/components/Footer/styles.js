@@ -7,11 +7,12 @@ export default makeStyles((theme) => ({
     left: "0",
     bottom: "0",
     width: "100%",
+    marginTop:'1.5rem'
   },
   paper: {
     background:
       "linear-gradient(to right, #292E49, #536976)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */,
-    padding:'2rem',
+    padding:'1rem',
   },
   infoContainer: {
     display:'flex',
@@ -21,14 +22,19 @@ export default makeStyles((theme) => ({
   },
   info: {
     display:'flex',
-    flexDirection:'column',
+    alignItems:'center',
+    // flexDirection:'row',
     width:'max-content',
     paddingTop:'0 !important',
-    paddingBottom:'0 !important'
+    paddingBottom:'0 !important',
+    [theme.breakpoints.up('md')]: {
+      flexDirection:'column',
+    },
   },
   title:{
     color:'#666666',
     fontWeight:'900',
+    marginRight:'1rem'
   },
   text:{
     color:'#fff'
@@ -43,7 +49,10 @@ export default makeStyles((theme) => ({
     fontWeight:'900',
     opacity:'.7'
   },
-  socialMediaIcons:{},
+  socialMediaIcons:{
+    paddingTop:'0 !important',
+    paddingBottom:'0 !important',
+  },
   socialMediaIcon:{
     padding:'0.2rem',
     color:'white',
