@@ -12,18 +12,7 @@ const Footer = () => {
     <div className={classes.container}>
       <Paper className={classes.paper} elevation={3}>
         <Grid container className={classes.infoContainer}>
-          <Grid item xs={6} sm={6} md={6} lg={4}>
-            <Box className={classes.info} p={{ xs: 2, sm: 4, md:6, lg: 8 }}>
-              <Typography variant="subtitle1" gutterBottom className={classes.title}>
-                CALL
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom className={classes.text}>
-                917-292-4594
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} sm={6} md={6} lg={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box className={classes.info} p={{ xs: 2, sm: 4, md:6, lg: 8 }}>
               <Typography variant="subtitle1" gutterBottom className={classes.title}>
                 EMAIL
@@ -33,9 +22,27 @@ const Footer = () => {
               </Typography>
             </Box>
           </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
+            <Box className={classes.socialMediaIcons} p={{ xs: 2, sm: 4, md:6, lg: 8 }}>
+              <Typography variant="body1" gutterBottom className={classes.socialHeader}>
+              Innovating one project at a time
+              </Typography>
+              <Box>
+                <a target="_blank" rel="noreferrer" href="https://github.com/squireaintready">
+                  <GitHubIcon className={classes.socialMediaIcon}/>
+                </a>
+                <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/samuel-jo">
+                  <LinkedInIcon className={classes.socialMediaIcon}/>
+                </a>
+                <a target="_blank" rel="noreferrer" href="https://www.instagram.com/jamnssamn/">
+                  <InstagramIcon className={classes.socialMediaIcon}/>
+                </a>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
 
-        <Box className={classes.socialContainer} p={{ xs: 2, sm: 4, md:6, lg: 8 }}>
+        {/* <Box className={classes.socialContainer} p={{ xs: 2, sm: 4, md:6, lg: 8 }}>
           <Typography variant="body1" gutterBottom className={classes.socialHeader}>
             Innovating one project at a time
           </Typography>
@@ -50,7 +57,7 @@ const Footer = () => {
               <InstagramIcon className={classes.socialMediaIcon}/>
             </a>
           </Box>
-        </Box>
+        </Box> */}
 
       </Paper>
     </div>
