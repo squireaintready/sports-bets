@@ -34,6 +34,7 @@ export default makeStyles((theme) => ({
     display:'flex',
   },
   icon:{
-    marginRight:'.5rem'
+    marginRight:'.5rem',
+    marginTop:'.2rem'
   }
 }));
