@@ -27,14 +27,14 @@ const UnitsChart = ({ mostRecentBalance }) => {
         <Typography
           variant="subtitle1"
           gutterBottom
-          className={classes.unitsText}
+          className={classes.unitsLeft}
         >
           {`${unitsCount} units`}
         </Typography>
         <Typography
           variant="subtitle1"
           gutterBottom
-          className={classes.unitsText}
+          className={classes.unitsRight}
         >
           {
             mostRecentBalance ? (
