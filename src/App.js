@@ -35,8 +35,9 @@ function App() {
             ...prevState,
             {
               timestamp: convertedDate,
-              balance: doc.data().balance,
-              id: doc.data().id,
+              balance: doc?.data()?.balance,
+              id: doc?.data()?.id,
+              units: doc?.data()?.units
             },
           ]);
         });

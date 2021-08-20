@@ -1,47 +1,39 @@
 import React, { useState } from "react";
+import BalanceEditor from "./BalanceEditor";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
 
-import { Input, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import PublishIcon from "@material-ui/icons/Publish";
 import useStyles from "./styles";
 
 const BalancesChart = ({ balances, setStateFromDb }) => {
   const classes = useStyles();
   const [input, setInput] = useState("");
+  const [unitCount, setUnitCount] = useState("");
   const [editedRef, setEditedRef] = useState("");
   const [user] = useAuthState(auth);
 
   const handleIconClick = (id) => {
     let inputRef = document.getElementById(`${id}`);
-    let previousBalanceRef =  document.getElementById(`${id}`).nextSibling;
-    let icon = document.getElementById(`${id}`).previousSibling;
-    console.log(icon)
-    // CLOSES PREVIOUSLY OPENED EDITS
+    let iconRef = document.getElementById(`icon${id}`);
     if (editedRef && inputRef !== editedRef) {
       editedRef.style.display = "none";
-      previousBalanceRef.style.textDecoration = 'none'
     }
     // TOGGLES DISPLAY ON IF DISPLAY IS OFF
     if (inputRef.style.display === "none" || inputRef.style.display === "") {
-      console.log('display is on')
       inputRef.style.display = "flex";
-      previousBalanceRef.style.textDecoration = 'line-through'
-      icon.style.transform = 'rotate(90deg)'
+      iconRef.style.transform = 'rotate(90deg)'
+      console.log('rotated/expanded')
     } else {
-      // TOGGLES DISPLAY OFF IS DISPLAY IS ON
-      console.log(inputRef.style.display)
-      console.log('display is off')
       inputRef.style.display = "none";
-      previousBalanceRef.style.textDecoration = 'none'
-      icon.style.transform = 'rotate(-90deg)'
+      setUnitCount(0);
+      iconRef.style.transform = 'rotate(-90deg)'
+      console.log('rotated back to normal')
     }
     setInput("");
     setEditedRef(inputRef);
-    // icon=''
-    // inputRef=''
-    // previousBalanceRef=''
   };
 
   const handleChange = (e) => {
@@ -50,25 +42,51 @@ const BalancesChart = ({ balances, setStateFromDb }) => {
 
   const submitUpdatedBalance = (balance) => {
     // PUSH NEW BALANCE(input) TO FIREBASE
-    if (user) {
-      let uid = user.uid;
-      let balancesRef = db
-        .collection("users")
-        .doc(uid)
-        .collection("daily-balances");
-      balancesRef.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          if (doc.data().balance === balance) {
-            let temp = doc.data();
-            balancesRef.doc(doc.id).set({
-              ...temp,
-              balance: input,
-            });
-          }
+    if (parseInt(input) > 0 || unitCount > 0) {
+      if (user) {
+        let uid = user.uid;
+        let balancesRef = db
+          .collection("users")
+          .doc(uid)
+          .collection("daily-balances");
+        balancesRef.get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().balance === balance) {
+              let temp = doc.data();
+              if(parseInt(input) > 0 && unitCount > 0){
+                balancesRef.doc(doc.id).set({
+                  ...temp,
+                  balance: input,
+                  units: unitCount,
+                });
+              }
+              else if (parseInt(input) > 0) {
+                balancesRef.doc(doc.id).set({
+                  ...temp,
+                  balance: input,
+                });
+              }
+              else if (unitCount > 0) {
+                balancesRef.doc(doc.id).set({
+                  ...temp,
+                  units: unitCount,
+                });
+              }
+            }
+          });
         });
-      });
+      }
+      setInput("");
+      setUnitCount(0);
     }
-    setInput("");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
+
+  const handleUnitChange = (e) => {
+    console.log(e.target.value);
+    setUnitCount(e.target.value);
   };
 
   return (
@@ -77,46 +95,50 @@ const BalancesChart = ({ balances, setStateFromDb }) => {
         <Typography variant="h5" gutterBottom className={classes.header}>
           Recent Balances
         </Typography>
-        {balances.map((dat) => (
-          <div className={classes.row} key={dat.id}>
-            <div className={classes.leftSide}>
+        {balances.map((balance) => (
+          <div className={classes.row} key={balance.id}>
+            <div className={classes.topRow}>
               <ChevronRightIcon
                 color="secondary"
                 fontSize="small"
                 className={classes.icon}
-                onClick={() => handleIconClick(dat.id)}
+                onClick={() => handleIconClick(balance.id)}
+                id={`icon${balance.id}`}
               />
-              <div id={dat.id} className={classes.editContainer}>
-                <Input
-                  type="text"
-                  value={input}
-                  className={classes.editInput}
-                  inputProps={{ inputMode: "decimal" }}
-                  onChange={handleChange}
-                />
-                <PublishIcon
-                  className={classes.publishIcon}
-                  fontSize="small"
-                  onClick={() => submitUpdatedBalance(dat.balance)}
-                />
+              <div className={classes.leftSide}>
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  className={classes.unitsText}
+                >
+                  {`$${balance.balance}`}
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  className={classes.unitCount}
+                >
+                  {balance.units > 0 ? `${balance.units} units` : "- units"}
+                </Typography>
               </div>
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                className={classes.unitsText}
-              >
-                {`$${dat.balance}`}
-              </Typography>
+              <div className={classes.rightSide}>
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  className={classes.unitsText}
+                >
+                  {balance.timestamp}
+                </Typography>
+              </div>
             </div>
-            <div className={classes.rightSide}>
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                className={classes.unitsText}
-              >
-                {dat.timestamp}
-              </Typography>
-            </div>
+            <BalanceEditor
+              balance={balance}
+              input={input}
+              handleChange={handleChange}
+              unitCount={unitCount}
+              handleUnitChange={handleUnitChange}
+              submitUpdatedBalance={submitUpdatedBalance}
+            />
           </div>
         ))}
       </Paper>
@@ -125,3 +147,35 @@ const BalancesChart = ({ balances, setStateFromDb }) => {
 };
 
 export default BalancesChart;
+
+{
+  /* <div id={balance.id} className={classes.bottomRow}>
+              <div className={classes.editContainer}>
+                <TextField
+                  type="number"
+                  value={input}
+                  className={classes.editInput}
+                  inputProps={{ inputMode: "decimal" }}
+                  onChange={handleChange}
+                  label="New Balance"
+                  color="secondary"
+                />
+              </div>
+              <div className={classes.editUnitCount}>
+                <TextField
+                  type="number"
+                  className={classes.unitCountInput}
+                  color="secondary"
+                  inputProps={{ inputMode: "decimal" }}
+                  value={unitCount}
+                  onChange={handleUnitChange}
+                  label="New Units"
+                />
+              </div>
+                <PublishIcon
+                  className={classes.publishIcon}
+                  fontSize="small"
+                  onClick={() => submitUpdatedBalance(balance.balance)}
+                />
+            </div> */
+}
