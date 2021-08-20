@@ -42,6 +42,7 @@ const Input = () => {
       });
     }
     setInput("");
+    setTimeout(() =>{ window.location.reload(); }, 500);
   };
 
   return (
