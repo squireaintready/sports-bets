@@ -20,9 +20,23 @@ export default makeStyles((theme) => ({
   },
   row:{
     display:'flex',
-    justifyContent:'space-between',
-    width: '18rem',
+    flexDirection:'column',
     borderBottom: '1px solid gray',
+    width: '18rem',
+  },
+  topRow:{
+    display:'flex',
+    justifyContent:'space-between',
+  },
+  bottomRow:{
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    // marginLeft:'3.6rem',
+    // marginRight:'3.6rem',
+    paddingLeft:'1rem',
+    paddingRight:'1rem',
+    display:'none', 
   },
   header:{
     color:'white'
@@ -32,30 +46,52 @@ export default makeStyles((theme) => ({
   },
   leftSide:{
     display:'flex',
-    marginLeft:'1rem'
+    alignItems:'center',
+    justifyContent:'space-between',
+    // marginLeft:'1rem',
+    width:'50%'
     // justifyContent:'flex-start'
   },
   rightSide:{
-    marginRight:'1rem'
+    // marginRight:'1rem',
+    // display:'flex',
+  },
+  unitCount:{
+    marginLeft:'.5rem',
+    marginRight:'.5rem',
+    color:'white'
+  },
+  unitCountInput:{
+    // marginLeft:'.5rem',
+    // marginRight:'.5rem',
+    width:'6rem',
+    color:'red',
+    marginBottom:'.2rem',
   },
   icon:{
-    marginRight:'.5rem',
-    marginTop:'.2rem',
     "&:hover, &:focus": {
       cursor:'pointer'
     },
   },
   editContainer:{
-    display:'none', 
+    display:'flex',
     marginRight:'.25rem',
     alignItems:'center'
   },
   editInput:{
-    width:'4rem',
+    width:'6rem',
+    color:'red',
     marginBottom:'.2rem',
-    color:'red'
   },
   publishIcon:{
-    marginBottom:'.4rem'
-  }
+    marginTop:'.5rem',
+  },
+  editUnitCount:{
+    display:'flex',
+    alignItems:'center',
+  },
+  editUnitBtn:{
+    padding:'0',
+    marginleft:'2rem'
+  },
 }));

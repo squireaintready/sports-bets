@@ -40,6 +40,7 @@ export default makeStyles((theme) => ({
     width:'14rem',
     backgroundColor:"#4ca1af",
     borderRadius: '10px',
+    border:'2px solid gray',
     paddingLeft: '2rem',
     paddingRight: '2rem',
     paddingTop: '0.5rem',
